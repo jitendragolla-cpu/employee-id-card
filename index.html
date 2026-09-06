@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AP School Education Employee ID Card Generator</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+AP School Education Employee ID Card Generator
+</title>
+
+<!-- IMAGE + PDF LIBRARIES -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+
 <style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
 
 *{
     box-sizing:border-box;
@@ -17,30 +30,44 @@
 
 body{
     margin:0;
-    padding:20px;
+    padding:15px;
     background:#f2f5f8;
     font-family:Arial,Helvetica,sans-serif;
     color:#172033;
 }
 
 .container{
-    max-width:1100px;
+    width:100%;
+    max-width:1150px;
     margin:auto;
 }
 
-.title{
+.main-title{
     text-align:center;
     color:#123f7a;
     font-size:28px;
     font-weight:900;
-    margin:10px 0 20px;
+    margin:8px 0 20px;
 }
+
+
+/* =====================================================
+   FORM
+===================================================== */
 
 .form-box{
     background:#ffffff;
-    padding:20px;
     border-radius:14px;
+    padding:20px;
     box-shadow:0 5px 20px rgba(0,0,0,.12);
+}
+
+.form-heading{
+    text-align:center;
+    color:#123f7a;
+    font-size:21px;
+    font-weight:900;
+    margin-bottom:18px;
 }
 
 .form-grid{
@@ -51,76 +78,100 @@ body{
 
 .field label{
     display:block;
-    font-size:13px;
-    font-weight:bold;
-    color:#16488d;
     margin-bottom:6px;
+    color:#16488d;
+    font-size:13px;
+    font-weight:800;
 }
 
-.field input{
+.field input,
+.field textarea{
     width:100%;
-    padding:11px;
     border:1px solid #cbd5df;
     border-radius:7px;
+    padding:11px;
     font-size:14px;
+    font-family:Arial,Helvetica,sans-serif;
     background:#fff;
+}
+
+.field textarea{
+    min-height:85px;
+    resize:vertical;
+}
+
+.full-field{
+    grid-column:1 / -1;
 }
 
 .buttons{
     display:flex;
     flex-wrap:wrap;
+    justify-content:center;
     gap:10px;
-    margin-top:18px;
+    margin-top:20px;
 }
 
 .buttons button{
     border:0;
-    padding:12px 18px;
     border-radius:7px;
+    padding:12px 18px;
     color:#fff;
+    font-size:14px;
     font-weight:bold;
     cursor:pointer;
-    font-size:14px;
 }
 
-.generate{
+.generate-btn{
     background:#15539a;
 }
 
-.download-image{
+.image-btn{
     background:#16864b;
 }
 
-.download-pdf{
+.pdf-btn{
     background:#b51e35;
 }
 
-.print-card{
-    background:#333333;
+.print-btn{
+    background:#333;
 }
 
-.preview-title{
+.buttons button:hover{
+    opacity:.88;
+}
+
+
+/* =====================================================
+   PREVIEW
+===================================================== */
+
+.preview-heading{
     text-align:center;
     color:#16488d;
     margin:25px 0 12px;
 }
 
 .card-scroll{
-    overflow:auto;
-    padding:10px;
+    width:100%;
+    overflow-x:auto;
+    padding:10px 5px 25px;
 }
 
 
-/* ============================
-   ID CARD
-============================ */
+/* =====================================================
+   CARD COMMON
+===================================================== */
 
-#employeeCard{
+.id-card{
 
     width:900px;
     height:550px;
 
     position:relative;
+
+    margin:0 auto 25px;
 
     background:#ffffff;
 
@@ -130,12 +181,12 @@ body{
 
     overflow:hidden;
 
-    margin:auto;
-
     box-shadow:0 10px 30px rgba(0,0,0,.18);
+
+    flex:none;
 }
 
-#employeeCard:before{
+.id-card:before{
 
     content:"";
 
@@ -154,20 +205,19 @@ body{
 }
 
 
-/* ============================
+/* =====================================================
    HEADER
-============================ */
+===================================================== */
 
 .card-header{
 
     position:absolute;
 
     top:14px;
-
     left:25px;
     right:25px;
 
-    height:185px;
+    height:180px;
 
     text-align:center;
 
@@ -176,8 +226,8 @@ body{
 
 .emblem{
 
-    width:103px;
-    height:103px;
+    width:100px;
+    height:100px;
 
     object-fit:contain;
 
@@ -190,7 +240,7 @@ body{
 
     color:#123f87;
 
-    font-size:29px;
+    font-size:28px;
 
     font-weight:900;
 
@@ -203,20 +253,20 @@ body{
 
     color:#087042;
 
-    font-size:21px;
+    font-size:20px;
 
     font-weight:900;
 
     line-height:1.05;
 
-    margin-top:8px;
+    margin-top:7px;
 
     white-space:nowrap;
 }
 
-.identity-title{
+.card-type{
 
-    color:#555555;
+    color:#555;
 
     font-size:11px;
 
@@ -228,15 +278,15 @@ body{
 }
 
 
-/* ============================
-   MAIN CONTENT
-============================ */
+/* =====================================================
+   FRONT CONTENT
+===================================================== */
 
-.card-content{
+.front-content{
 
     position:absolute;
 
-    top:204px;
+    top:198px;
 
     left:38px;
     right:38px;
@@ -251,13 +301,11 @@ body{
 }
 
 
-/* ============================
-   LEFT SIDE
-============================ */
+/* LEFT */
 
-.left-side{
+.photo-section{
 
-    width:240px;
+    width:235px;
 
     flex:none;
 
@@ -269,9 +317,10 @@ body{
 
 .photo-box{
 
-    width:180px;
+    width:175px;
+    height:205px;
 
-    height:215px;
+    margin:auto;
 
     border:4px solid #1656a0;
 
@@ -279,15 +328,12 @@ body{
 
     background:#eaf3fb;
 
-    margin:auto;
-
-    overflow:hidden;
-
     display:flex;
 
     align-items:center;
-
     justify-content:center;
+
+    overflow:hidden;
 
     color:#687887;
 
@@ -311,27 +357,25 @@ body{
 
 .signature-box{
 
-    width:205px;
-
+    width:200px;
     height:60px;
+
+    margin:13px auto 0;
 
     border:2px solid #1656a0;
 
     border-radius:7px;
 
-    background:#ffffff;
-
-    margin:15px auto 0;
-
-    overflow:hidden;
+    background:#fff;
 
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
-    color:#999999;
+    overflow:hidden;
+
+    color:#999;
 
     font-size:11px;
 
@@ -350,19 +394,17 @@ body{
 
 .signature-label{
 
-    margin-top:6px;
+    margin-top:5px;
 
     color:#16488d;
 
-    font-size:12px;
+    font-size:11px;
 
     font-weight:900;
 }
 
 
-/* ============================
-   DIVIDER
-============================ */
+/* DIVIDER */
 
 .vertical-divider{
 
@@ -376,17 +418,15 @@ body{
 }
 
 
-/* ============================
-   RIGHT SIDE
-============================ */
+/* DETAILS */
 
-.right-side{
+.details-section{
 
     flex:1;
 
     position:relative;
 
-    padding-top:7px;
+    padding-top:5px;
 }
 
 .watermark{
@@ -394,11 +434,9 @@ body{
     position:absolute;
 
     width:300px;
-
     height:300px;
 
     right:0;
-
     top:0;
 
     object-fit:contain;
@@ -419,13 +457,13 @@ body{
 
     display:grid;
 
-    grid-template-columns:220px 18px 1fr;
+    grid-template-columns:205px 18px 1fr;
 
-    margin-bottom:16px;
+    margin-bottom:15px;
 
-    font-size:18px;
+    font-size:17px;
 
-    line-height:1.15;
+    line-height:1.2;
 }
 
 .detail-label{
@@ -444,7 +482,7 @@ body{
 
 .detail-value{
 
-    color:#111111;
+    color:#111;
 
     font-weight:700;
 
@@ -452,26 +490,145 @@ body{
 }
 
 
-/* ============================
-   BOTTOM DESIGN
-============================ */
+/* =====================================================
+   BACK CARD
+===================================================== */
 
-.bottom-design{
+.back-content{
 
     position:absolute;
 
-    bottom:17px;
+    top:205px;
 
-    left:355px;
+    left:55px;
+    right:55px;
 
-    width:180px;
+    bottom:45px;
+
+    z-index:4;
+}
+
+.back-heading{
+
+    text-align:center;
+
+    color:#123f87;
+
+    font-size:19px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    margin-bottom:18px;
+}
+
+.address-box{
+
+    border:2px solid #1656a0;
+
+    border-radius:10px;
+
+    padding:14px 18px;
+
+    margin-bottom:15px;
+
+    background:#ffffff;
+}
+
+.address-title{
+
+    color:#16488d;
+
+    font-size:14px;
+
+    font-weight:900;
+
+    margin-bottom:7px;
+
+    text-transform:uppercase;
+}
+
+.address-value{
+
+    color:#111;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    line-height:1.4;
+
+    min-height:40px;
+
+    word-break:break-word;
+}
+
+.back-info{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+}
+
+.info-box{
+
+    border:2px solid #1656a0;
+
+    border-radius:9px;
+
+    padding:12px 15px;
+
+    background:#fff;
+}
+
+.info-title{
+
+    color:#16488d;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    margin-bottom:5px;
+}
+
+.info-value{
+
+    color:#111;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    word-break:break-word;
+}
+
+
+/* =====================================================
+   BOTTOM DECORATION
+===================================================== */
+
+.bottom-line{
+
+    position:absolute;
+
+    bottom:18px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:230px;
 
     height:12px;
 
     z-index:8;
 }
 
-.bottom-design:before{
+.bottom-line:before{
 
     content:"";
 
@@ -481,14 +638,14 @@ body{
 
     top:6px;
 
-    width:70px;
+    width:90px;
 
     height:2px;
 
     background:#1656a0;
 }
 
-.bottom-design:after{
+.bottom-line:after{
 
     content:"";
 
@@ -498,7 +655,7 @@ body{
 
     top:6px;
 
-    width:70px;
+    width:90px;
 
     height:2px;
 
@@ -509,12 +666,11 @@ body{
 
     position:absolute;
 
-    left:84px;
+    left:109px;
 
     top:0;
 
     width:13px;
-
     height:13px;
 
     background:#1656a0;
@@ -523,21 +679,21 @@ body{
 }
 
 
-/* ============================
-   TRICOLOR DECORATION
-============================ */
+/* =====================================================
+   TRICOLOR
+===================================================== */
 
 .tricolor{
 
     position:absolute;
 
-    right:-10px;
+    right:-20px;
 
     bottom:-5px;
 
-    width:330px;
+    width:350px;
 
-    height:110px;
+    height:100px;
 
     overflow:hidden;
 
@@ -548,82 +704,109 @@ body{
 
     position:absolute;
 
-    right:-25px;
+    right:-30px;
 
-    bottom:65px;
+    bottom:63px;
 
-    width:380px;
+    width:390px;
 
-    height:23px;
+    height:21px;
 
     background:#f28c19;
 
     border-radius:50%;
 
-    transform:rotate(-16deg);
+    transform:rotate(-15deg);
 }
 
 .green{
 
     position:absolute;
 
-    right:-30px;
+    right:-35px;
 
     bottom:25px;
 
-    width:400px;
+    width:410px;
 
-    height:23px;
+    height:21px;
 
     background:#149447;
 
     border-radius:50%;
 
-    transform:rotate(-16deg);
+    transform:rotate(-15deg);
 }
 
 
-/* ============================
+/* =====================================================
    MOBILE
-============================ */
+===================================================== */
 
-@media(max-width:650px){
+@media(max-width:700px){
+
+    body{
+        padding:8px;
+    }
+
+    .main-title{
+        font-size:20px;
+    }
+
+    .form-box{
+        padding:14px;
+    }
 
     .form-grid{
         grid-template-columns:1fr;
     }
 
-    .title{
-        font-size:21px;
+    .full-field{
+        grid-column:auto;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .buttons button{
+        width:100%;
+    }
+
+    .card-scroll{
+        overflow-x:auto;
+        -webkit-overflow-scrolling:touch;
     }
 
 }
 
 
-/* ============================
+/* =====================================================
    PRINT
-============================ */
+===================================================== */
 
 @media print{
 
     body{
-        background:#ffffff;
+        background:#fff;
         padding:0;
     }
 
+    .main-title,
     .form-box,
-    .title,
-    .preview-title{
+    .preview-heading{
         display:none !important;
     }
 
     .card-scroll{
-        padding:0;
         overflow:visible;
+        padding:0;
     }
 
-    #employeeCard{
+    .id-card{
         box-shadow:none;
+        margin-bottom:20px;
+        page-break-after:always;
     }
 
 }
@@ -637,23 +820,32 @@ body{
 <div class="container">
 
 
-<h1 class="title">
+<h1 class="main-title">
 AP School Education Employee ID Card Generator
 </h1>
 
 
-<!-- ============================
-     INPUT FORM
-============================ -->
+<!-- =====================================================
+     FORM
+===================================================== -->
 
 <div class="form-box">
+
+<div class="form-heading">
+ENTER EMPLOYEE DETAILS
+</div>
+
 
 <div class="form-grid">
 
 
+<!-- NAME -->
+
 <div class="field">
 
-<label>NAME OF THE EMPLOYEE</label>
+<label>
+NAME OF THE EMPLOYEE
+</label>
 
 <input
 type="text"
@@ -663,9 +855,13 @@ placeholder="Enter employee name">
 </div>
 
 
+<!-- DESIGNATION -->
+
 <div class="field">
 
-<label>DESIGNATION</label>
+<label>
+DESIGNATION
+</label>
 
 <input
 type="text"
@@ -675,9 +871,13 @@ placeholder="Enter designation">
 </div>
 
 
+<!-- SCHOOL -->
+
 <div class="field">
 
-<label>NAME OF THE SCHOOL</label>
+<label>
+NAME OF THE SCHOOL
+</label>
 
 <input
 type="text"
@@ -687,9 +887,13 @@ placeholder="Enter school name">
 </div>
 
 
+<!-- MANDAL -->
+
 <div class="field">
 
-<label>MANDAL</label>
+<label>
+MANDAL
+</label>
 
 <input
 type="text"
@@ -699,9 +903,13 @@ placeholder="Enter mandal">
 </div>
 
 
+<!-- UDISE -->
+
 <div class="field">
 
-<label>SCHOOL / UDISE CODE</label>
+<label>
+SCHOOL / UDISE CODE
+</label>
 
 <input
 type="text"
@@ -711,9 +919,13 @@ placeholder="Enter UDISE code">
 </div>
 
 
+<!-- EMPLOYEE ID -->
+
 <div class="field">
 
-<label>EMPLOYEE ID</label>
+<label>
+EMPLOYEE ID
+</label>
 
 <input
 type="text"
@@ -723,21 +935,29 @@ placeholder="Enter employee ID">
 </div>
 
 
+<!-- MOBILE -->
+
 <div class="field">
 
-<label>MOBILE NUMBER</label>
+<label>
+MOBILE NUMBER
+</label>
 
 <input
-type="text"
+type="tel"
 id="mobile"
 placeholder="Enter mobile number">
 
 </div>
 
 
+<!-- PHOTO -->
+
 <div class="field">
 
-<label>UPLOAD EMPLOYEE PHOTOGRAPH</label>
+<label>
+UPLOAD EMPLOYEE PHOTOGRAPH
+</label>
 
 <input
 type="file"
@@ -747,9 +967,13 @@ accept="image/*">
 </div>
 
 
+<!-- SIGNATURE -->
+
 <div class="field">
 
-<label>UPLOAD EMPLOYEE SIGNATURE</label>
+<label>
+UPLOAD EMPLOYEE SIGNATURE
+</label>
 
 <input
 type="file"
@@ -759,14 +983,46 @@ accept="image/*">
 </div>
 
 
+<!-- SCHOOL ADDRESS -->
+
+<div class="field full-field">
+
+<label>
+SCHOOL ADDRESS
+</label>
+
+<textarea
+id="schoolAddress"
+placeholder="Enter complete school address"></textarea>
+
 </div>
 
+
+<!-- RESIDENTIAL ADDRESS -->
+
+<div class="field full-field">
+
+<label>
+RESIDENTIAL ADDRESS
+</label>
+
+<textarea
+id="residentialAddress"
+placeholder="Enter complete residential address"></textarea>
+
+</div>
+
+
+</div>
+
+
+<!-- BUTTONS -->
 
 <div class="buttons">
 
 <button
-class="generate"
-onclick="generateCard()">
+class="generate-btn"
+onclick="generateCards()">
 
 GENERATE CARD
 
@@ -774,28 +1030,28 @@ GENERATE CARD
 
 
 <button
-class="download-image"
-onclick="downloadImage()">
+class="image-btn"
+onclick="downloadBothImages()">
 
-DOWNLOAD IMAGE
+DOWNLOAD FRONT + BACK IMAGE
 
 </button>
 
 
 <button
-class="download-pdf"
+class="pdf-btn"
 onclick="downloadPDF()">
 
-DOWNLOAD PDF
+DOWNLOAD 2-PAGE PDF
 
 </button>
 
 
 <button
-class="print-card"
+class="print-btn"
 onclick="window.print()">
 
-PRINT CARD
+PRINT FRONT + BACK
 
 </button>
 
@@ -804,60 +1060,56 @@ PRINT CARD
 </div>
 
 
-<h3 class="preview-title">
+<h3 class="preview-heading">
 CARD PREVIEW
 </h3>
 
 
-<!-- ============================
-     ID CARD
-============================ -->
-
 <div class="card-scroll">
 
-<div id="employeeCard">
+
+<!-- =====================================================
+     FRONT CARD
+===================================================== -->
+
+<div
+id="frontCard"
+class="id-card">
 
 
 <!-- HEADER -->
 
 <div class="card-header">
 
-
 <img
 class="emblem"
 src="EMBLUM.png"
 alt="Government of Andhra Pradesh Emblem">
 
-
 <div class="gov-title">
 GOVERNMENT OF ANDHRA PRADESH
 </div>
-
 
 <div class="department-title">
 DEPARTMENT OF SCHOOL EDUCATION, ANDHRA PRADESH
 </div>
 
-
-<div class="identity-title">
+<div class="card-type">
 GOVERNMENT EMPLOYEE IDENTITY CARD
 </div>
 
-
 </div>
 
 
-<!-- CONTENT -->
+<!-- FRONT CONTENT -->
 
-<div class="card-content">
-
-
-<!-- LEFT SIDE -->
-
-<div class="left-side">
+<div class="front-content">
 
 
-<!-- ONE PHOTO -->
+<!-- PHOTO + SIGNATURE -->
+
+<div class="photo-section">
+
 
 <div class="photo-box">
 
@@ -872,8 +1124,6 @@ alt="Employee Photograph">
 </div>
 
 
-<!-- ONE SIGNATURE -->
-
 <div class="signature-box">
 
 <span id="signaturePlaceholder">
@@ -886,7 +1136,6 @@ alt="Employee Signature">
 
 </div>
 
-
 <div class="signature-label">
 EMPLOYEE SIGNATURE
 </div>
@@ -895,14 +1144,12 @@ EMPLOYEE SIGNATURE
 </div>
 
 
-<!-- DIVIDER -->
-
 <div class="vertical-divider"></div>
 
 
-<!-- RIGHT SIDE -->
+<!-- DETAILS -->
 
-<div class="right-side">
+<div class="details-section">
 
 
 <img
@@ -920,9 +1167,7 @@ alt="">
 Name of the Employee
 </div>
 
-<div class="detail-colon">
-:
-</div>
+<div class="detail-colon">:</div>
 
 <div
 class="detail-value"
@@ -939,9 +1184,7 @@ id="cardName">
 Designation
 </div>
 
-<div class="detail-colon">
-:
-</div>
+<div class="detail-colon">:</div>
 
 <div
 class="detail-value"
@@ -958,9 +1201,7 @@ id="cardDesignation">
 Name of the School
 </div>
 
-<div class="detail-colon">
-:
-</div>
+<div class="detail-colon">:</div>
 
 <div
 class="detail-value"
@@ -977,9 +1218,7 @@ id="cardSchool">
 Mandal
 </div>
 
-<div class="detail-colon">
-:
-</div>
+<div class="detail-colon">:</div>
 
 <div
 class="detail-value"
@@ -996,9 +1235,7 @@ id="cardMandal">
 School / UDISE Code
 </div>
 
-<div class="detail-colon">
-:
-</div>
+<div class="detail-colon">:</div>
 
 <div
 class="detail-value"
@@ -1015,9 +1252,7 @@ id="cardUdise">
 Employee ID
 </div>
 
-<div class="detail-colon">
-:
-</div>
+<div class="detail-colon">:</div>
 
 <div
 class="detail-value"
@@ -1034,9 +1269,7 @@ id="cardEmployeeId">
 Mobile Number
 </div>
 
-<div class="detail-colon">
-:
-</div>
+<div class="detail-colon">:</div>
 
 <div
 class="detail-value"
@@ -1056,7 +1289,7 @@ id="cardMobile">
 
 <!-- BOTTOM -->
 
-<div class="bottom-design">
+<div class="bottom-line">
 
 <div class="diamond"></div>
 
@@ -1074,54 +1307,312 @@ id="cardMobile">
 
 </div>
 
+
+<!-- =====================================================
+     BACK CARD
+===================================================== -->
+
+<div
+id="backCard"
+class="id-card">
+
+
+<!-- BACK HEADER -->
+
+<div class="card-header">
+
+<img
+class="emblem"
+src="EMBLUM.png"
+alt="Government of Andhra Pradesh Emblem">
+
+<div class="gov-title">
+GOVERNMENT OF ANDHRA PRADESH
 </div>
 
+<div class="department-title">
+DEPARTMENT OF SCHOOL EDUCATION, ANDHRA PRADESH
+</div>
+
+<div class="card-type">
+EMPLOYEE INFORMATION
+</div>
+
+</div>
+
+
+<!-- BACK CONTENT -->
+
+<div class="back-content">
+
+
+<div class="back-heading">
+ADDRESS & CONTACT INFORMATION
+</div>
+
+
+<!-- SCHOOL ADDRESS -->
+
+<div class="address-box">
+
+<div class="address-title">
+SCHOOL ADDRESS
+</div>
+
+<div
+class="address-value"
+id="cardSchoolAddress">
+
+—
+
+</div>
+
+</div>
+
+
+<!-- RESIDENTIAL ADDRESS -->
+
+<div class="address-box">
+
+<div class="address-title">
+RESIDENTIAL ADDRESS
+</div>
+
+<div
+class="address-value"
+id="cardResidentialAddress">
+
+—
+
+</div>
+
+</div>
+
+
+<!-- OTHER INFORMATION -->
+
+<div class="back-info">
+
+
+<div class="info-box">
+
+<div class="info-title">
+EMPLOYEE ID
+</div>
+
+<div
+class="info-value"
+id="backEmployeeId">
+
+—
+
+</div>
+
+</div>
+
+
+<div class="info-box">
+
+<div class="info-title">
+MOBILE NUMBER
+</div>
+
+<div
+class="info-value"
+id="backMobile">
+
+—
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- WATERMARK -->
+
+<img
+class="watermark"
+src="EMBLUM.png"
+alt=""
+style="
+position:absolute;
+right:40px;
+bottom:30px;
+opacity:.04;
+z-index:0;
+">
+
+
+<!-- BOTTOM -->
+
+<div class="bottom-line">
+
+<div class="diamond"></div>
+
+</div>
+
+
+<div class="tricolor">
+
+<div class="orange"></div>
+
+<div class="green"></div>
+
+</div>
+
+
+</div>
+
+
+</div>
 
 </div>
 
 
 <script>
 
-
-/* ============================
+/* =====================================================
    GENERATE CARD
-============================ */
+===================================================== */
 
-function generateCard(){
+function generateCards(){
 
-    document.getElementById("cardName").textContent =
-        document.getElementById("employeeName").value.trim() || "—";
+    const name =
+        document.getElementById(
+            "employeeName"
+        ).value.trim();
+
+    const designation =
+        document.getElementById(
+            "designation"
+        ).value.trim();
+
+    const school =
+        document.getElementById(
+            "schoolName"
+        ).value.trim();
+
+    const mandal =
+        document.getElementById(
+            "mandal"
+        ).value.trim();
+
+    const udise =
+        document.getElementById(
+            "udise"
+        ).value.trim();
+
+    const employeeId =
+        document.getElementById(
+            "employeeId"
+        ).value.trim();
+
+    const mobile =
+        document.getElementById(
+            "mobile"
+        ).value.trim();
+
+    const schoolAddress =
+        document.getElementById(
+            "schoolAddress"
+        ).value.trim();
+
+    const residentialAddress =
+        document.getElementById(
+            "residentialAddress"
+        ).value.trim();
 
 
-    document.getElementById("cardDesignation").textContent =
-        document.getElementById("designation").value.trim() || "—";
+    /* FRONT */
+
+    document.getElementById(
+        "cardName"
+    ).textContent =
+        name || "—";
 
 
-    document.getElementById("cardSchool").textContent =
-        document.getElementById("schoolName").value.trim() || "—";
+    document.getElementById(
+        "cardDesignation"
+    ).textContent =
+        designation || "—";
 
 
-    document.getElementById("cardMandal").textContent =
-        document.getElementById("mandal").value.trim() || "—";
+    document.getElementById(
+        "cardSchool"
+    ).textContent =
+        school || "—";
 
 
-    document.getElementById("cardUdise").textContent =
-        document.getElementById("udise").value.trim() || "—";
+    document.getElementById(
+        "cardMandal"
+    ).textContent =
+        mandal || "—";
 
 
-    document.getElementById("cardEmployeeId").textContent =
-        document.getElementById("employeeId").value.trim() || "—";
+    document.getElementById(
+        "cardUdise"
+    ).textContent =
+        udise || "—";
 
 
-    document.getElementById("cardMobile").textContent =
-        document.getElementById("mobile").value.trim() || "—";
+    document.getElementById(
+        "cardEmployeeId"
+    ).textContent =
+        employeeId || "—";
+
+
+    document.getElementById(
+        "cardMobile"
+    ).textContent =
+        mobile || "—";
+
+
+    /* BACK */
+
+    document.getElementById(
+        "cardSchoolAddress"
+    ).textContent =
+        schoolAddress || "—";
+
+
+    document.getElementById(
+        "cardResidentialAddress"
+    ).textContent =
+        residentialAddress || "—";
+
+
+    document.getElementById(
+        "backEmployeeId"
+    ).textContent =
+        employeeId || "—";
+
+
+    document.getElementById(
+        "backMobile"
+    ).textContent =
+        mobile || "—";
+
+
+    /* Scroll to preview on mobile */
+
+    document.querySelector(
+        ".preview-heading"
+    ).scrollIntoView({
+        behavior:"smooth"
+    });
 
 }
 
 
-/* ============================
-   PHOTO UPLOAD
-============================ */
+/* =====================================================
+   PHOTO
+===================================================== */
 
 document
 .getElementById("photoInput")
@@ -1129,33 +1620,36 @@ document
     "change",
     function(){
 
-        const file=this.files[0];
+        const file =
+            this.files[0];
 
         if(!file){
             return;
         }
 
-        const reader=new FileReader();
+        const reader =
+            new FileReader();
 
-        reader.onload=function(event){
+        reader.onload =
+            function(event){
 
-            const image=
+                const image =
+                    document.getElementById(
+                        "cardPhoto"
+                    );
+
+                image.src =
+                    event.target.result;
+
+                image.style.display =
+                    "block";
+
                 document.getElementById(
-                    "cardPhoto"
-                );
+                    "photoPlaceholder"
+                ).style.display =
+                    "none";
 
-            image.src=
-                event.target.result;
-
-            image.style.display=
-                "block";
-
-            document.getElementById(
-                "photoPlaceholder"
-            ).style.display=
-                "none";
-
-        };
+            };
 
         reader.readAsDataURL(file);
 
@@ -1163,9 +1657,9 @@ document
 );
 
 
-/* ============================
-   SIGNATURE UPLOAD
-============================ */
+/* =====================================================
+   SIGNATURE
+===================================================== */
 
 document
 .getElementById("signatureInput")
@@ -1173,33 +1667,36 @@ document
     "change",
     function(){
 
-        const file=this.files[0];
+        const file =
+            this.files[0];
 
         if(!file){
             return;
         }
 
-        const reader=new FileReader();
+        const reader =
+            new FileReader();
 
-        reader.onload=function(event){
+        reader.onload =
+            function(event){
 
-            const image=
+                const image =
+                    document.getElementById(
+                        "cardSignature"
+                    );
+
+                image.src =
+                    event.target.result;
+
+                image.style.display =
+                    "block";
+
                 document.getElementById(
-                    "cardSignature"
-                );
+                    "signaturePlaceholder"
+                ).style.display =
+                    "none";
 
-            image.src=
-                event.target.result;
-
-            image.style.display=
-                "block";
-
-            document.getElementById(
-                "signaturePlaceholder"
-            ).style.display=
-                "none";
-
-        };
+            };
 
         reader.readAsDataURL(file);
 
@@ -1207,175 +1704,256 @@ document
 );
 
 
-/* ============================
-   CREATE CANVAS
-============================ */
+/* =====================================================
+   CANVAS
+===================================================== */
 
-function createCardCanvas(callback){
+async function createCanvas(card){
 
-    generateCard();
-
-    html2canvas(
-
-        document.getElementById(
-            "employeeCard"
-        ),
-
+    return await html2canvas(
+        card,
         {
-
             scale:3,
-
             backgroundColor:"#ffffff",
-
             useCORS:true,
-
             logging:false
-
-        }
-
-    ).then(function(canvas){
-
-        callback(canvas);
-
-    });
-
-}
-
-
-/* ============================
-   DOWNLOAD IMAGE
-============================ */
-
-function downloadImage(){
-
-    createCardCanvas(
-        function(canvas){
-
-            let name=
-                document.getElementById(
-                    "employeeName"
-                ).value.trim();
-
-
-            if(!name){
-                name="Employee";
-            }
-
-
-            name=
-                name.replace(
-                    /[^a-z0-9]/gi,
-                    "_"
-                );
-
-
-            const link=
-                document.createElement(
-                    "a"
-                );
-
-
-            link.download=
-                name+
-                "_AP_Employee_ID_Card.png";
-
-
-            link.href=
-                canvas.toDataURL(
-                    "image/png"
-                );
-
-
-            link.click();
-
         }
     );
 
 }
 
 
-/* ============================
-   DOWNLOAD PDF
-============================ */
+/* =====================================================
+   GET SAFE NAME
+===================================================== */
 
-function downloadPDF(){
+function getEmployeeFileName(){
 
-    createCardCanvas(
-        function(canvas){
+    let name =
+        document.getElementById(
+            "employeeName"
+        ).value.trim();
 
-            const {jsPDF}=
-                window.jspdf;
+    if(!name){
+        name = "Employee";
+    }
 
-
-            const pdf=
-                new jsPDF({
-
-                    orientation:
-                        "landscape",
-
-                    unit:
-                        "mm",
-
-                    format:[
-                        85.60,
-                        53.98
-                    ]
-
-                });
-
-
-            const image=
-                canvas.toDataURL(
-                    "image/png"
-                );
-
-
-            pdf.addImage(
-
-                image,
-
-                "PNG",
-
-                0,
-
-                0,
-
-                85.60,
-
-                53.98
-
-            );
-
-
-            let name=
-                document.getElementById(
-                    "employeeName"
-                ).value.trim();
-
-
-            if(!name){
-                name="Employee";
-            }
-
-
-            name=
-                name.replace(
-                    /[^a-z0-9]/gi,
-                    "_"
-                );
-
-
-            pdf.save(
-
-                name+
-                "_AP_Employee_ID_Card.pdf"
-
-            );
-
-        }
+    return name.replace(
+        /[^a-z0-9]/gi,
+        "_"
     );
 
 }
+
+
+/* =====================================================
+   DOWNLOAD FRONT + BACK AS ONE IMAGE
+===================================================== */
+
+async function downloadBothImages(){
+
+    generateCards();
+
+    const front =
+        await createCanvas(
+            document.getElementById(
+                "frontCard"
+            )
+        );
+
+    const back =
+        await createCanvas(
+            document.getElementById(
+                "backCard"
+            )
+        );
+
+
+    const combined =
+        document.createElement(
+            "canvas"
+        );
+
+
+    const gap = 40;
+
+
+    combined.width =
+        Math.max(
+            front.width,
+            back.width
+        );
+
+
+    combined.height =
+        front.height +
+        back.height +
+        gap;
+
+
+    const ctx =
+        combined.getContext(
+            "2d"
+        );
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+    ctx.fillRect(
+        0,
+        0,
+        combined.width,
+        combined.height
+    );
+
+
+    ctx.drawImage(
+        front,
+        0,
+        0
+    );
+
+
+    ctx.drawImage(
+        back,
+        0,
+        front.height + gap
+    );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.download =
+        getEmployeeFileName() +
+        "_AP_Employee_ID_Card_Front_Back.png";
+
+
+    link.href =
+        combined.toDataURL(
+            "image/png"
+        );
+
+
+    link.click();
+
+}
+
+
+/* =====================================================
+   DOWNLOAD TWO PAGE PDF
+===================================================== */
+
+async function downloadPDF(){
+
+    generateCards();
+
+
+    const front =
+        await createCanvas(
+            document.getElementById(
+                "frontCard"
+            )
+        );
+
+
+    const back =
+        await createCanvas(
+            document.getElementById(
+                "backCard"
+            )
+        );
+
+
+    const {jsPDF} =
+        window.jspdf;
+
+
+    /* ID CARD SIZE */
+
+    const cardWidth =
+        85.60;
+
+    const cardHeight =
+        53.98;
+
+
+    const pdf =
+        new jsPDF({
+
+            orientation:"landscape",
+
+            unit:"mm",
+
+            format:[
+                cardWidth,
+                cardHeight
+            ]
+
+        });
+
+
+    /* FRONT PAGE */
+
+    pdf.addImage(
+        front.toDataURL(
+            "image/png"
+        ),
+        "PNG",
+        0,
+        0,
+        cardWidth,
+        cardHeight
+    );
+
+
+    /* BACK PAGE */
+
+    pdf.addPage(
+        [
+            cardWidth,
+            cardHeight
+        ],
+        "landscape"
+    );
+
+
+    pdf.addImage(
+        back.toDataURL(
+            "image/png"
+        ),
+        "PNG",
+        0,
+        0,
+        cardWidth,
+        cardHeight
+    );
+
+
+    pdf.save(
+        getEmployeeFileName() +
+        "_AP_Employee_ID_Card.pdf"
+    );
+
+}
+
+
+/* =====================================================
+   INITIAL GENERATION
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        generateCards();
+
+    }
+);
 
 </script>
 
